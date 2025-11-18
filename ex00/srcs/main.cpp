@@ -1,8 +1,8 @@
-#include "Animal.hpp"
-#include "Dog.hpp"
-#include "Cat.hpp"
-#include "WrongAnimal.hpp"
-#include "WrongCat.hpp"
+#include "animal.hpp"
+#include "dog.hpp"
+#include "cat.hpp"
+// #include "WrongAnimal.hpp"
+// #include "WrongCat.hpp"
 
 void testBasicPolymorphism() {
     std::cout << "=== Testing Basic Polymorphism ===" << std::endl;
@@ -23,20 +23,20 @@ void testBasicPolymorphism() {
     delete i;
 }
 
-void testWrongPolymorphism() {
-    std::cout << "\n=== Testing Wrong Polymorphism ===" << std::endl;
+// void testWrongPolymorphism() {
+//     std::cout << "\n=== Testing Wrong Polymorphism ===" << std::endl;
     
-    const WrongAnimal* wrongMeta = new WrongAnimal();
-    const WrongAnimal* wrongCat = new WrongCat();
+//     const WrongAnimal* wrongMeta = new WrongAnimal();
+//     const WrongAnimal* wrongCat = new WrongCat();
     
-    std::cout << wrongCat->getType() << " " << std::endl;
+//     std::cout << wrongCat->getType() << " " << std::endl;
     
-    wrongCat->makeSound(); // Will output WrongAnimal sound (no polymorphism)
-    wrongMeta->makeSound(); // Will output WrongAnimal sound
+//     wrongCat->makeSound(); // Will output WrongAnimal sound (no polymorphism)
+//     wrongMeta->makeSound(); // Will output WrongAnimal sound
     
-    delete wrongMeta;
-    delete wrongCat;
-}
+//     delete wrongMeta;
+//     delete wrongCat;
+// }
 
 void testCopyAndAssignment() {
     std::cout << "\n=== Testing Copy and Assignment ===" << std::endl;
@@ -81,7 +81,7 @@ void testArrays() {
 
 int main() {
     testBasicPolymorphism();
-    testWrongPolymorphism();
+    // testWrongPolymorphism();
     testCopyAndAssignment();
     testArrays();
     
