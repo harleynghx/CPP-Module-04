@@ -15,8 +15,8 @@ Dog& Dog::operator=(const Dog& other) {
     std::cout << "Dog copy assignment operator called" << std::endl;
     if (this != &other) {
         Animal::operator=(other);
-        delete brain; //? delete old brain
         brain = new Brain(*other.brain);
+        delete brain; //? delete old brain
     }
     return *this;
 }

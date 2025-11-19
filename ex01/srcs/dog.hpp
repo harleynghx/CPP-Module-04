@@ -5,7 +5,7 @@
 #include "animal.hpp"
 #include "brain.hpp"
 
-class Dog : public Animal, public Brain{
+class Dog : public Animal {
 private:
     //? Brain as a direct member instead of inheritent like animal cause Brain is small and simple (no polymorphism needed)
     //? Now Dog have brain (via pointers not through inheritance)
