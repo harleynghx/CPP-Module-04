@@ -1,114 +1,106 @@
-#include "Animal.hpp"
-#include "Dog.hpp"
-#include "Cat.hpp"
-#include "Brain.hpp"
+#include "animal.hpp"
+#include "dog.hpp"
+#include "cat.hpp"
+#include <iostream>
 
-void testBasicFunctionality() {
-    std::cout << "=== Testing Basic Functionality ===" << std::endl;
-    
-    const Animal* j = new Dog();
-    const Animal* i = new Cat();
-    
-    delete j; // Should not create a leak
-    delete i; // Should not create a leak
-}
+int main() {
+    std::cout << "=== EX01 TEST: Animals with Brains ===" << std::endl;
+    std::cout << std::endl;
 
-void testAnimalArray() {
-    std::cout << "\n=== Testing Animal Array ===" << std::endl;
+    // Test 1: Basic creation and destruction (from PDF example)
+    std::cout << "1. Testing basic creation/destruction:" << std::endl;
+    const Animal* dog = new Dog();
+    const Animal* cat = new Cat();
     
-    const int arraySize = 6;
+    std::cout << "Dog type: " << dog->getType() << std::endl;
+    std::cout << "Cat type: " << cat->getType() << std::endl;
+    
+    dog->makeSound();
+    cat->makeSound();
+    
+    delete dog;  // Should not leak
+    delete cat;  // Should not leak
+    std::cout << std::endl;
+
+    // Test 2: Array of animals (half Dog, half Cat)
+    std::cout << "2. Testing array of animals:" << std::endl;
+    const int arraySize = 4;
     Animal* animals[arraySize];
     
     // Create half dogs, half cats
-    for (int i = 0; i < arraySize; ++i) {
+    for (int i = 0; i < arraySize; i++) {
         if (i < arraySize / 2) {
             animals[i] = new Dog();
-            // Set some ideas for dogs
-            Dog* dog = dynamic_cast<Dog*>(animals[i]);
-            if (dog) {
-                dog->setIdea(0, "I love bones");
-                dog->setIdea(1, "Where's my ball?");
-            }
+            std::cout << "Created Dog at index " << i << std::endl;
         } else {
             animals[i] = new Cat();
-            // Set some ideas for cats
-            Cat* cat = dynamic_cast<Cat*>(animals[i]);
-            if (cat) {
-                cat->setIdea(0, "I love naps");
-                cat->setIdea(1, "Where's the laser pointer?");
-            }
+            std::cout << "Created Cat at index " << i << std::endl;
         }
     }
-    
-    // Test polymorphism and display types
-    for (int i = 0; i < arraySize; ++i) {
-        std::cout << "Animal " << i << " type: " << animals[i]->getType() << std::endl;
-        animals[i]->makeSound();
-    }
-    
-    // Delete every Animal (proper destructors must be called)
-    std::cout << "\nDeleting animals..." << std::endl;
-    for (int i = 0; i < arraySize; ++i) {
+    std::cout << std::endl;
+
+    // Test 3: Delete through Animal pointers
+    std::cout << "3. Deleting through Animal pointers:" << std::endl;
+    for (int i = 0; i < arraySize; i++) {
         delete animals[i];
     }
-}
+    std::cout << std::endl;
 
-void testDeepCopy() {
-    std::cout << "\n=== Testing Deep Copy ===" << std::endl;
+    // Test 4: Brain functionality
+    std::cout << "4. Testing Brain ideas:" << std::endl;
+    Dog smartDog;
+    smartDog.setIdea(0, "I love bones!");
+    smartDog.setIdea(1, "Where's my ball?");
     
-    // Create original dog with ideas
-    Dog* originalDog = new Dog();
-    originalDog->setIdea(0, "Original idea");
-    originalDog->setIdea(1, "Chase cats");
+    Cat cleverCat;
+    cleverCat.setIdea(0, "I love naps!");
+    cleverCat.setIdea(1, "Mouse hunting time!");
+    
+    std::cout << "Smart dog idea 0: " << smartDog.getBrain()->getIdea(0) << std::endl;
+    std::cout << "Smart dog idea 1: " << smartDog.getBrain()->getIdea(1) << std::endl;
+    std::cout << "Clever cat idea 0: " << cleverCat.getBrain()->getIdea(0) << std::endl;
+    std::cout << "Clever cat idea 1: " << cleverCat.getBrain()->getIdea(1) << std::endl;
+    std::cout << std::endl;
+
+    // Test 5: Deep copy verification
+    std::cout << "5. Testing deep copy (VERY IMPORTANT):" << std::endl;
+    Dog originalDog;
+    originalDog.setIdea(0, "Original idea");
     
     // Test copy constructor
-    Dog* copiedDog = new Dog(*originalDog);
-    copiedDog->setIdea(0, "Modified idea"); // Should not affect original
+    Dog copiedDog(originalDog);
+    copiedDog.setIdea(0, "Copied and modified idea");
     
-    // Test assignment operator
-    Dog assignedDog;
-    assignedDog = *originalDog;
-    assignedDog->setIdea(1, "Different idea"); // Should not affect original
+    std::cout << "Original dog idea: " << originalDog.getBrain()->getIdea(0) << std::endl;
+    std::cout << "Copied dog idea: " << copiedDog.getBrain()->getIdea(0) << std::endl;
     
-    std::cout << "Original dog idea 0: " << originalDog->getBrain()->getIdea(0) << std::endl;
-    std::cout << "Copied dog idea 0: " << copiedDog->getBrain()->getIdea(0) << std::endl;
-    std::cout << "Assigned dog idea 1: " << assignedDog.getBrain()->getIdea(1) << std::endl;
-    
-    delete originalDog;
-    delete copiedDog;
-    // assignedDog destructor called automatically
-}
-
-void testBrainIdeas() {
-    std::cout << "\n=== Testing Brain Ideas ===" << std::endl;
-    
-    Cat smartCat;
-    smartCat.setIdea(0, "I'm a smart cat");
-    smartCat.setIdea(1, "Fish is delicious");
-    smartCat.setIdea(2, "Nap time soon");
-    
-    Dog cleverDog;
-    cleverDog.setIdea(0, "I'm a clever dog");
-    cleverDog.setIdea(1, "Walk time!");
-    cleverDog.setIdea(2, "Where's my toy?");
-    
-    std::cout << "Smart cat ideas: " << std::endl;
-    if (smartCat.getBrain()) {
-        for (int i = 0; i < 3; ++i) {
-            std::cout << "  " << i << ": " << smartCat.getBrain()->getIdea(i) << std::endl;
-        }
+    // Check if deep copy worked
+    if (originalDog.getBrain()->getIdea(0) == "Original idea") {
+        std::cout << "✅ SUCCESS: Deep copy works! Original not affected." << std::endl;
+    } else {
+        std::cout << "❌ FAIL: Shallow copy detected!" << std::endl;
     }
-}
+    std::cout << std::endl;
 
-int main() {
-    testBasicFunctionality();
-    testAnimalArray();
-    testDeepCopy();
-    testBrainIdeas();
+    // Test 6: Assignment operator deep copy
+    std::cout << "6. Testing assignment deep copy:" << std::endl;
+    Cat cat1;
+    cat1.setIdea(1, "First cat's idea");
     
-    // Additional test: Verify no memory leaks
-    std::cout << "\n=== Program finished ===" << std::endl;
+    Cat cat2;
+    cat2 = cat1;  // Assignment operator
+    cat2.setIdea(1, "Second cat's different idea");
+    
+    std::cout << "Cat1 idea: " << cat1.getBrain()->getIdea(1) << std::endl;
+    std::cout << "Cat2 idea: " << cat2.getBrain()->getIdea(1) << std::endl;
+    
+    if (cat1.getBrain()->getIdea(1) == "First cat's idea") {
+        std::cout << "✅ SUCCESS: Assignment deep copy works!" << std::endl;
+    }
+    std::cout << std::endl;
+
+    std::cout << "=== All tests completed ===" << std::endl;
     std::cout << "Check for memory leaks with: leaks ./animals" << std::endl;
-    
+
     return 0;
 }

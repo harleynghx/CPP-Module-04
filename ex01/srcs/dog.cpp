@@ -38,3 +38,5 @@ void Dog::setIdea(unsigned int index, const std::string& idea) {
     if (brain) 
         brain->setIdea(index, idea);
 }
+
+//? setIdea 

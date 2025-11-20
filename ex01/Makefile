@@ -1,9 +1,9 @@
 
-NAME = ex00
+NAME = ex01
 
 SRC_DIR = ./srcs
 OBJ_DIR = obj
-SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/animal.cpp $(SRC_DIR)/dog.cpp $(SRC_DIR)/cat.cpp
+SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/animal.cpp $(SRC_DIR)/brain.cpp $(SRC_DIR)/dog.cpp $(SRC_DIR)/cat.cpp
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
 CXX = c++
