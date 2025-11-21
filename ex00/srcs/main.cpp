@@ -38,52 +38,12 @@ void testBasicPolymorphism() {
 //     delete wrongCat;
 // }
 
-void testCopyAndAssignment() {
-    std::cout << "\n=== Testing Copy and Assignment ===" << std::endl;
-    
-    Dog originalDog;
-    Dog copiedDog(originalDog);
-    Dog assignedDog;
-    assignedDog = originalDog;
-    
-    Cat originalCat;
-    Cat copiedCat(originalCat);
-    Cat assignedCat;
-    assignedCat = originalCat;
-}
 
-void testArrays() {
-    std::cout << "\n=== Testing Animal Array ===" << std::endl;
-    
-    const int arraySize = 4;
-    Animal* animals[arraySize];
-    
-    // Create half dogs, half cats
-    for (int i = 0; i < arraySize; ++i) {
-        if (i < arraySize / 2) {
-            animals[i] = new Dog();
-        } else {
-            animals[i] = new Cat();
-        }
-    }
-    
-    // Test polymorphism
-    for (int i = 0; i < arraySize; ++i) {
-        std::cout << animals[i]->getType() << ": ";
-        animals[i]->makeSound();
-    }
-    
-    // Clean up
-    for (int i = 0; i < arraySize; ++i) {
-        delete animals[i];
-    }
-}
+
 
 int main() {
     testBasicPolymorphism();
     // testWrongPolymorphism();
-    testCopyAndAssignment();
-    testArrays();
     
     return 0;
 }
