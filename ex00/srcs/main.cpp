@@ -1,8 +1,8 @@
 #include "animal.hpp"
 #include "dog.hpp"
 #include "cat.hpp"
-// #include "WrongAnimal.hpp"
-// #include "WrongCat.hpp"
+#include "xAnimal.hpp"
+#include "xCat.hpp"
 
 void testBasicPolymorphism() {
     std::cout << "=== Testing Basic Polymorphism ===" << std::endl;
@@ -22,6 +22,13 @@ void testBasicPolymorphism() {
     delete j;
     delete i;
 }
+
+// void testWrongPolymorphism() {
+//     std::cout << "== xTest == " << std::endl;
+
+//     const xAnimal* baseP = new xAnimal();
+
+// }
 
 // void testWrongPolymorphism() {
 //     std::cout << "\n=== Testing Wrong Polymorphism ===" << std::endl;
